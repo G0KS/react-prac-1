@@ -1,17 +1,44 @@
+import userEvent from "@testing-library/user-event";
+import { useRef } from "react";
+
 import Card from "../card/Card";
 
 import classes from "./AddNewMeetup.module.css";
 
-function AddNewMeetup() {
+function AddNewMeetup(props) {
+  const titleInputRef = useRef();
+  const imageInputRef = useRef();
+  const addressInputRef = useRef();
+  const descriptionInputRef = useRef();
+
+  function submitHandler(event) {
+    event.preventDefault();
+
+    const enteredTitle = titleInputRef.current.value;
+    const enteredImage = imageInputRef.current.value;
+    const enteredAddress = addressInputRef.current.value;
+    const enteredDescription = descriptionInputRef.current.value;
+
+    const meetupData = {
+      title: enteredTitle,
+      image: enteredImage,
+      address: enteredAddress,
+      description: enteredDescription,
+    };
+
+    props.onAddMeetup(meetupData);
+  }
+
   return (
     <Card>
-      <form className={classes.form}>
+      <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.content}>
           <label htmlFor="title">Title</label>
           <input
             type="text"
             required
-            placeholder="Next Meetup"
+            placeholder="eg: Next Meetup"
+            ref={titleInputRef}
             id="title"
           ></input>
         </div>
@@ -20,7 +47,8 @@ function AddNewMeetup() {
           <input
             type="url"
             required
-            placeholder="http://www.images.com/image.jpg"
+            placeholder="http://example.com/image.jpg"
+            ref={imageInputRef}
             id="image"
           ></input>
         </div>
@@ -29,7 +57,8 @@ function AddNewMeetup() {
           <input
             type="text"
             required
-            placeholder="123 Street, Abc City"
+            placeholder="eg: 123 Street, Abc City"
+            ref={addressInputRef}
             id="address"
           ></input>
         </div>
@@ -39,7 +68,8 @@ function AddNewMeetup() {
             type="text"
             required
             rows="5"
-            placeholder="This is the next Meetup"
+            placeholder="eg: This is the next Meetup"
+            ref={descriptionInputRef}
             id="desciption"
           ></textarea>
         </div>
