@@ -8,6 +8,7 @@ function MainNavbar() {
     <nav className={classes.navbar}>
       <div className={classes.logo}>
         <SiAnaconda />
+        <h4>Let's Meet</h4>
       </div>
       <ul>
         <li>
